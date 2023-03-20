@@ -15,29 +15,32 @@ echo"
 <th></th>
 </tr>
 ";
+
 require "connection.php";
 $res=$cnx->query("select note.codeM,libelle,valeur from module,note where note.codeM=module.codeM and CNE='$cne'");
 while($resu=$res->fetch_assoc()){
 
+
 $cm=$resu['codeM'];
+$_SESSION['codeMSes']=$cm;
 $lib=$resu['libelle'];
 $note=$resu['valeur'];
-$_SESSION['codeMSes']=$cm;
+
 echo"
 <tr>
 <td>$cm</td>
 <td>$lib</td>
-<td><input type='text' value='$note' name='nvNote'></td>
-<td><a href='modifier.php?cne=$cne&codem=$cm'>Modifier</a></td>
-
+<td><input type='text' value='$note' name='nvNote[]'></td>
+<td><a href='index.php?cne=$cne & codem=$cm'>Modifier</a></td>
 </tr>
 
 ";
 
+
 }
 
 echo"</table></br>
-<input type='submit' value='Confirmer'>
+<input type='submit' value='Confirmer' name='confirmer'>
 </form>
 </fieldset>";
 

@@ -20,6 +20,8 @@
     <td><select name="cne" style="width:5cm; height:0.7cm; border-color:green;"  class="form-select" aria-label="Default select example" >
 
 <?php
+
+session_start();
 require "connection.php";
 $res=$cnx->query("select cne,nom from etudiant");
 while($resultat=$res->fetch_assoc()){
@@ -31,6 +33,7 @@ echo"
 </option>
 ";
 }
+
 ?>
     </select></td>
     </tr>
@@ -43,3 +46,17 @@ echo"
     </fieldset>
 </body>
 </html>
+<?php
+
+if(isset($_POST['confirmer'])){
+    foreach($_POST['nvNote'] as $note){
+    $cne=$_SESSION['cneSes'];
+   $cm= $_SESSION['codeMSes'];
+   
+$rq="update note set valeur=$note where CNE='$cne' and codeM='$cm'";
+$cnx->query($rq);
+
+    }
+}
+
+?>
